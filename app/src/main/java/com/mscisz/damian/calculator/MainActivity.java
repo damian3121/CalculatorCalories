@@ -1,5 +1,6 @@
 package com.mscisz.damian.calculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.AlertDialog;
@@ -22,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             setContentView(R.layout.activity_main);
+//            setContentView(R.layout.activity_main);
+            Intent i=new Intent(getApplicationContext(),EnterBasicDataActivity.class);
+            startActivity(i);
+//            textMainActivity = (TextView) findViewById
         }
     }
 

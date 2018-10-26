@@ -4,14 +4,122 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EnterBasicDataActivity">
+    tools:context=".EnterBasicDataActivity"
+    android:background="@drawable/xedgar3x">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Wprowadzenie danych"
-        tools:layout_editor_absoluteX="122dp"
-        tools:layout_editor_absoluteY="69dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/xedgar3x">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#ffffff">
+
+            <TextView
+                android:id="@+id/headingBasicData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Wprowadź podstawowe dane"
+                android:textSize="18sp"
+                android:layout_marginBottom="10dp" />
+
+            <EditText
+                android:id="@+id/inputName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Imię"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="10dp"/>
+
+            <EditText
+                android:id="@+id/inputGrowth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Wzrost [cm]"
+                android:inputType="number"
+                android:layout_marginBottom="10dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerActivityLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/levelActivity"
+                android:layout_marginBottom="10dp"/>
+
+            <RadioGroup
+                android:id="@+id/sexRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButtonMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mężczyzna" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kobieta" />
+
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/inputWeightLossByWeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:hint="Waga do zrzucenia na tydzień"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/inputWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Waga [kg]"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="10dp"/>
+
+            <EditText
+                android:id="@+id/inputTargetWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:hint="Waga docelowa"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/inputDateBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="2dp"
+                android:hint="Data urodzenia"
+                android:inputType="date"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/buttonConfirmBasicData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="buttonConfirmBasicData"
+                android:text="Potwierdź dane"
+                android:layout_marginBottom="10dp"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

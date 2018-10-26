@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Calculator</string>
+    <string name="app_name">Kalkulator kalorii</string>
+    <string-array name="levelActivity">
+        <item>Siedzący tryb życia</item>
+        <item>Niska aktywność fizyczna</item>
+        <item>Umiarkowana aktywność fizyczna</item>
+        <item>Wysoka aktywność fizyczna</item>
+        <item>Ekstremalnie wysoka aktywność fizyczna</item>
+    </string-array>
 </resources>
