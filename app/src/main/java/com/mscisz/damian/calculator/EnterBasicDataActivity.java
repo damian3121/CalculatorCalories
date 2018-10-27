@@ -166,8 +166,8 @@ public class EnterBasicDataActivity extends AppCompatActivity {
 
     public void buttonConfirmBasicData(View v) {
 
-        if (!validateInputName() || !validateInputWeight() || !validateInputHeight()
-                || !validateSexRadioGroup() || !validateInputWeightLossByWeek() || !validateInputTargetWeight()
+        if (!validateInputName() || !validateInputHeight() || !validateSexRadioGroup()
+                || !validateInputWeightLossByWeek() || !validateInputWeight() || !validateInputTargetWeight()
                 || !validateInputDate()) {
 
             return;
