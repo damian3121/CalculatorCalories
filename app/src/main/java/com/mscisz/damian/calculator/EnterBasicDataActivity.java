@@ -3,10 +3,10 @@ package com.mscisz.damian.calculator;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -19,14 +19,13 @@ public class EnterBasicDataActivity extends AppCompatActivity {
 
     private EditText inputName;
     private EditText inputWeight;
-    private EditText inputGrowth;
+    private EditText inputHeight;
     private RadioButton radioButtonMale;
     private RadioButton radioButtonFemale;
     private Spinner spinnerActivityLevel;
     private TextView inputDateBirth;
     private EditText inputTargetWeight;
     private EditText inputWeightLossByWeek;
-    private RadioGroup sexRadioGroup;
     int day, month, year;
 
 
@@ -37,14 +36,13 @@ public class EnterBasicDataActivity extends AppCompatActivity {
 
         inputName = (EditText) findViewById(R.id.inputName);
         inputWeight = (EditText) findViewById(R.id.inputWeight);
-        inputGrowth = (EditText) findViewById(R.id.inputGrowth);
+        inputHeight = (EditText) findViewById(R.id.inputHeight);
         radioButtonMale = (RadioButton) findViewById(R.id.radioButtonMale);
         radioButtonFemale = (RadioButton) findViewById(R.id.radioButtonFemale);
         spinnerActivityLevel = (Spinner) findViewById(R.id.spinnerActivityLevel);
         inputDateBirth = (TextView) findViewById(R.id.inputDateBirth);
         inputTargetWeight = (EditText) findViewById(R.id.inputTargetWeight);
         inputWeightLossByWeek = (EditText) findViewById(R.id.inputWeightLossByWeek);
-        sexRadioGroup = (RadioGroup) findViewById(R.id.sexRadioGroup);
 
         setDate();
     }
@@ -77,14 +75,14 @@ public class EnterBasicDataActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateInputGrowth(){
-        String pInputGrowth = inputGrowth.getText().toString().trim();
+    private boolean validateInputHeight(){
+        String pInputGrowth = inputHeight.getText().toString().trim();
 
         if(pInputGrowth.isEmpty()){
-            inputGrowth.setError("Wpisz wzrost");
+            inputHeight.setError("Wpisz wzrost");
             return false;
         }else if(Integer.parseInt(pInputGrowth)>230){
-            inputGrowth.setError("Wartość wzrostu jest nieprawidłowa");
+            inputHeight.setError("Wartość wzrostu jest nieprawidłowa");
             return false;
         }else{
             return true;
@@ -168,13 +166,33 @@ public class EnterBasicDataActivity extends AppCompatActivity {
 
     public void buttonConfirmBasicData(View v) {
 
-        if (!validateInputName() || !validateInputWeight() || !validateInputGrowth()
+        if (!validateInputName() || !validateInputWeight() || !validateInputHeight()
                 || !validateSexRadioGroup() || !validateInputWeightLossByWeek() || !validateInputTargetWeight()
                 || !validateInputDate()) {
+
             return;
         } else {
+            SharedPreferences basicDataPref = getSharedPreferences("basicDataPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = basicDataPref.edit();
+
+            editor.putString("name" ,inputName.getText().toString());
+            editor.putInt("height" , Integer.parseInt(inputHeight.getText().toString()));
+            editor.putString("activityLevel" ,spinnerActivityLevel.getSelectedItem().toString());
+            if(radioButtonMale.isChecked()){
+                editor.putString("sex" ,"Mężczyzna");
+            }else{
+                editor.putString("sex" ,"Kobieta");
+            }
+            editor.putFloat("inputWeightLossByWeek", Float.parseFloat(inputWeightLossByWeek.getText().toString()));
+            editor.putFloat("inputWeight", Float.parseFloat(inputWeight.getText().toString()));
+            editor.putFloat("inputTargetWeight", Float.parseFloat(inputTargetWeight.getText().toString()));
+            editor.putString("inputDateBirth" ,inputDateBirth.getText().toString());
+
+            editor.apply();
+
             Intent i = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(i);
+            finish();
         }
     }
 }
