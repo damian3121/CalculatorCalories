@@ -2,6 +2,7 @@ package com.mscisz.damian.calculator;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -172,9 +173,8 @@ public class EnterBasicDataActivity extends AppCompatActivity {
                 || !validateInputDate()) {
             return;
         } else {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Działa! Idź dalej xD");
-            alert.create().show();
+            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(i);
         }
     }
 }

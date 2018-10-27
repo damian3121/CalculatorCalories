@@ -12,20 +12,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
 
         SharedPreferences preferences = getSharedPreferences("preferences",MODE_PRIVATE);
         boolean firstStart = preferences.getBoolean("firstStart", true);
 
         if(firstStart){
-            setContentView(R.layout.activity_enter_basic_data);
+//            setContentView(R.layout.activity_enter_basic_data);
+            Intent i=new Intent(getApplicationContext(),EnterBasicDataActivity.class);
+            startActivity(i);
             enterBasicData();
         }
         else{
             setContentView(R.layout.activity_main);
 //            setContentView(R.layout.activity_main);
-            Intent i=new Intent(getApplicationContext(),EnterBasicDataActivity.class);
-            startActivity(i);
+//            Intent i=new Intent(getApplicationContext(),EnterBasicDataActivity.class);
+//            startActivity(i);
 //            textMainActivity = (TextView) findViewById
         }
     }
