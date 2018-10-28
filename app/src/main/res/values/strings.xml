@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Kalkulator kalorii</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
     <string-array name="levelActivity">
         <item>Siedzący tryb życia</item>
         <item>Niska aktywność fizyczna</item>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/db" android:title="dashboard" android:icon="@drawable/ic_pool_black_24dp"></item>
+    <item android:id="@+id/jeden" android:title="Jeden" android:icon="@drawable/ic_pool_black_24dp"></item>
+    <item android:id="@+id/dwa" android:title="Dwa" android:icon="@drawable/ic_pool_black_24dp"></item>
+    <item android:id="@+id/trzy" android:title="Trzy" android:icon="@drawable/ic_pool_black_24dp"></item>
+</menu>
