@@ -3,6 +3,11 @@ package com.mscisz.damian.calculator;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +22,12 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+import java.text.MessageFormat;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
-    private TextView inputNameHeader;
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //-------------
+        NavigationView navigationView = findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(this);
+        drawer = (DrawerLayout) findViewById(R.id.drawer);
 
         if(firstStart){
             Intent i=new Intent(getApplicationContext(),EnterBasicDataActivity.class);
@@ -55,5 +66,31 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("firstStart", false);
         editor.apply();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.progress:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ProgressFragment()).commit();
+                break;
+            case R.id.addMeals:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new AddMealsFragment()).commit();
+                break;
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
