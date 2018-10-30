@@ -28,11 +28,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
+    DatabaseHelper myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myDb = new DatabaseHelper(this);
 
         SharedPreferences preferences = getSharedPreferences("preferences",MODE_PRIVATE);
         boolean firstStart = preferences.getBoolean("firstStart", true);
