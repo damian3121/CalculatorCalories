@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myDb = new DatabaseHelper(this);
+        //myDb = new DatabaseHelper(this);
 
         SharedPreferences preferences = getSharedPreferences("preferences",MODE_PRIVATE);
         boolean firstStart = preferences.getBoolean("firstStart", true);
