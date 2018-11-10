@@ -67,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new AddProductFragment()).commit();
                 break;
+            case R.id.addMeals:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new AddMealFragment()).commit();
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);
