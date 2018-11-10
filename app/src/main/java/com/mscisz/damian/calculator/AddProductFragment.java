@@ -10,10 +10,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
-public class AddMealsFragment extends Fragment {
+public class AddProductFragment extends Fragment {
     DatabaseHelper myDb;
     EditText inputNameFood;
     EditText inputCaloriesValue;
@@ -28,7 +27,7 @@ public class AddMealsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_meals, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_product, container, false);
         inputNameFood = (EditText) v.findViewById(R.id.inputNameFood);
         inputCaloriesValue = (EditText) v.findViewById(R.id.inputCaloriesValue);
         fab = (FloatingActionButton) v.findViewById(R.id.fab);
