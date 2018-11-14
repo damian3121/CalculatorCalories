@@ -2,6 +2,7 @@ package com.mscisz.damian.calculator;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -61,5 +62,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else{
             return true;
         }
+    }
+
+    public Cursor getMealByDate(String typeMeal, String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( " select name from " + TABLE_MEAL_NAME
+                + " where date='" + date + "' and meal_type=" + "'" + typeMeal + "' ", null );
+
+        return cursor;
     }
 }

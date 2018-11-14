@@ -1,5 +1,7 @@
 package com.mscisz.damian.calculator;
 
+import android.app.AlertDialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.ExpandableListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.jar.Attributes;
 
 public class AddMealFragment extends Fragment {
 
@@ -17,10 +20,18 @@ public class AddMealFragment extends Fragment {
     private ExpandableListAdapter listAdapter;
     private List<String> listDataHeader;
     private HashMap<String,List<String>> listDataChild;
+    private DatabaseHelper myDb = new DatabaseHelper( getActivity() );
+
+    private List <String> breakfast = new ArrayList<String>();
+    List <String> elevenses = new ArrayList<String>();
+    List <String> dinner = new ArrayList<String>();
+    List <String> afternoonTea = new ArrayList<String>();
+    List <String> supper = new ArrayList<String>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+        myDb = new DatabaseHelper(getActivity());
     }
 
     @Override
@@ -29,6 +40,13 @@ public class AddMealFragment extends Fragment {
         View v = inflater.inflate( R.layout.fragment_add_meal, container, false );
         listView = (ExpandableListView) v.findViewById( R.id.lvExp);
         initData();
+
+        viewAllMealByDate("sniadanie", "2018-11-11");
+        viewAllMealByDate("sniadanie_2", "2018-11-10");
+        viewAllMealByDate("obiad", "2018-11-13");
+        viewAllMealByDate("podwieczorek", "2018-11-10");
+        viewAllMealByDate("kolacja", "2018-11-10");
+
         listAdapter = new ExpandableListAdapter( getActivity(),listDataHeader, listDataChild );
         listView.setAdapter( listAdapter );
 
@@ -45,30 +63,39 @@ public class AddMealFragment extends Fragment {
         listDataHeader.add( "Podwieczorek" );
         listDataHeader.add( "Kolacja" );
 
-        List <String> breakfast = new ArrayList<String>();
-        breakfast.add( "sn 1.1" );
-        breakfast.add( "sn 1.2" );
-
-        List <String> elevenses = new ArrayList<String>();
-        elevenses.add( "elevenses 2.1" );
-        elevenses.add( "elevenses 2.2" );
-        elevenses.add( "elevenses 2.2" );
-
-        List <String> dinner = new ArrayList<String>();
-        dinner.add( "dinner 3.1" );
-
-        List <String> afternoonTea = new ArrayList<String>();
-        afternoonTea.add( "podwie 4.1" );
-        afternoonTea.add( "podwie 4.2" );
-
-        List <String> supper = new ArrayList<String>();
-        supper.add( "kolacja 5.1" );
-        supper.add( "kolacja 5.2" );
-
         listDataChild.put(listDataHeader.get(0), breakfast);
         listDataChild.put(listDataHeader.get(1), elevenses);
         listDataChild.put(listDataHeader.get(2), dinner);
         listDataChild.put(listDataHeader.get(3), afternoonTea);
         listDataChild.put(listDataHeader.get(4), supper );
+    }
+
+    public void viewAllMealByDate(String typeMeal, String date){
+        Cursor cursor = myDb.getMealByDate(typeMeal, date);
+        String result_1 = "";
+
+        while (cursor.moveToNext()) {
+            result_1 = "";
+
+            result_1 = cursor.getString( 0 );
+
+            switch(typeMeal){
+                case "sniadanie":
+                    breakfast.add( result_1 );
+                    break;
+                case "sniadanie_2":
+                    elevenses.add( result_1 );
+                    break;
+                case "obiad":
+                    dinner.add( result_1 );
+                    break;
+                case "podwieczorek":
+                    afternoonTea.add( result_1 );
+                    break;
+                case "kolacja":
+                    supper.add( result_1 );
+                    break;
+            }
+        }
     }
 }
