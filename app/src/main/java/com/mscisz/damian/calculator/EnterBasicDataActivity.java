@@ -145,7 +145,7 @@ public class EnterBasicDataActivity extends AppCompatActivity {
         Calendar mCurrentDate;
         mCurrentDate = Calendar.getInstance();
         day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
-        month = mCurrentDate.get(Calendar.MONTH)+1;
+        month = mCurrentDate.get(Calendar.MONTH);
         year = mCurrentDate.get(Calendar.YEAR);
 
         inputDateBirth.setOnClickListener(new View.OnClickListener(){

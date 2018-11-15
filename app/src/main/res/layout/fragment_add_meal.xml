@@ -12,4 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/lvExp" />
+
+    <TextView
+        android:id="@+id/inputDate"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Podaj datę"
+        android:textSize="30dp" />
+
 </FrameLayout>
