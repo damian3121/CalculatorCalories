@@ -39,6 +39,10 @@ public class AddMealFragment extends Fragment {
     private List <String> afternoonTea = new ArrayList<String>();
     private List <String> supper = new ArrayList<String>();
 
+    int day;
+    int month;
+    int year;
+
     private TextView inputDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -54,6 +58,13 @@ public class AddMealFragment extends Fragment {
         View v = inflater.inflate( R.layout.fragment_add_meal, container, false );
         listView = (ExpandableListView) v.findViewById( R.id.lvExp);
         inputDate = (TextView) v.findViewById(R.id.inputDate);
+
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get( Calendar.YEAR );
+        month = calendar.get( Calendar.MONTH );
+        day = calendar.get( Calendar.DAY_OF_MONTH );
+        String date = year + "-" + month + "-" + day;
+        inputDate.setText( date );
 
         showDialogOnInputClick();
         initData();
@@ -114,10 +125,6 @@ public class AddMealFragment extends Fragment {
         inputDate.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get( Calendar.YEAR );
-                int month = calendar.get( Calendar.MONTH );
-                int day = calendar.get( Calendar.DAY_OF_MONTH );
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         getActivity(),
