@@ -71,7 +71,7 @@ public class AddMealFragment extends Fragment {
         month = calendar.get( Calendar.MONTH );
         day = calendar.get( Calendar.DAY_OF_MONTH );
 
-        String date = year + "-" + month + "-" + day;
+        String date = year + "-" + (month+1) + "-" + day;
         inputDate.setText( date );
 
         showDialogOnInputClick();

@@ -18,6 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String MEAL_ID = "ID";
     private static final String MEAL_DATE = "DATE";
     private static final String MEAL_TYPE = "MEAL_TYPE";
+    private static final String MEAL_QUANTITY = "MEAL_QUANTITY";
     private static final String FOOD_NAME= F_NAME;
 
     private static final String CREATE_TABLE_FOOD = "CREATE TABLE "
@@ -26,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_MEAL= "CREATE TABLE "
             + TABLE_MEAL_NAME + " (" + MEAL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + MEAL_DATE
-            + " DATE," + MEAL_TYPE + " VARCHAR," + FOOD_NAME + " VARCHAR," + " FOREIGN KEY(" + FOOD_NAME + ") REFERENCES "
+            + " DATE," + MEAL_TYPE + " VARCHAR," + FOOD_NAME + " VARCHAR," + MEAL_QUANTITY + "INTEGER, " + " FOREIGN KEY(" + FOOD_NAME + ") REFERENCES "
             + TABLE_F_NAME + "(" + F_NAME + ")" +");";
 
     private static final String DROP_TABLE_FOOD = " DROP TABLE IF EXIST "+ TABLE_F_NAME;
