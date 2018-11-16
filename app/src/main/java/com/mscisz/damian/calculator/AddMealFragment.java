@@ -2,10 +2,12 @@ package com.mscisz.damian.calculator;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -44,12 +46,16 @@ public class AddMealFragment extends Fragment {
     int year;
 
     private TextView inputDate;
+    private TextView confirmMeal;
+    private FloatingActionButton fabAddMeal;
+    Dialog popupDialog;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         myDb = new DatabaseHelper(getActivity());
+        popupDialog = new Dialog( getActivity() );
     }
 
     @Override
@@ -58,15 +64,18 @@ public class AddMealFragment extends Fragment {
         View v = inflater.inflate( R.layout.fragment_add_meal, container, false );
         listView = (ExpandableListView) v.findViewById( R.id.lvExp);
         inputDate = (TextView) v.findViewById(R.id.inputDate);
+        fabAddMeal = (FloatingActionButton) v.findViewById( R.id.fabAddMeal );
 
         Calendar calendar = Calendar.getInstance();
         year = calendar.get( Calendar.YEAR );
         month = calendar.get( Calendar.MONTH );
         day = calendar.get( Calendar.DAY_OF_MONTH );
+
         String date = year + "-" + month + "-" + day;
         inputDate.setText( date );
 
         showDialogOnInputClick();
+        ShowPopup();
         initData();
 
         listAdapter = new ExpandableListAdapter( getActivity(),listDataHeader, listDataChild );
@@ -155,5 +164,17 @@ public class AddMealFragment extends Fragment {
                 viewAllMealByDate("kolacja", inputDate.getText().toString());
             }
         };
+    }
+
+    public void ShowPopup(){
+        popupDialog.setContentView( R.layout.custom_popup );
+
+        fabAddMeal.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupDialog.getWindow().setBackgroundDrawable( new ColorDrawable( Color.TRANSPARENT ) );
+                popupDialog.show();
+            }
+        } );
     }
 }
