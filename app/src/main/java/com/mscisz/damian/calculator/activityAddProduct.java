@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ public class activityAddProduct extends AppCompatActivity {
         inputCaloriesValue = (EditText) findViewById(R.id.inputCaloriesValue);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         myDb = new DatabaseHelper(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         addFood();
     }
@@ -67,5 +69,16 @@ public class activityAddProduct extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
