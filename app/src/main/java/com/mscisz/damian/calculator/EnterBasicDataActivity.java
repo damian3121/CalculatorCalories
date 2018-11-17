@@ -10,10 +10,10 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.Calendar;
+
+import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class EnterBasicDataActivity extends AppCompatActivity {
 
@@ -22,7 +22,7 @@ public class EnterBasicDataActivity extends AppCompatActivity {
     private EditText inputHeight;
     private RadioButton radioButtonMale;
     private RadioButton radioButtonFemale;
-    private Spinner spinnerActivityLevel;
+    private MaterialSpinner spinnerActivityLevel;
     private TextView inputDateBirth;
     private EditText inputTargetWeight;
     private EditText inputWeightLossByWeek;
@@ -39,7 +39,7 @@ public class EnterBasicDataActivity extends AppCompatActivity {
         inputHeight = (EditText) findViewById(R.id.inputHeight);
         radioButtonMale = (RadioButton) findViewById(R.id.radioButtonMale);
         radioButtonFemale = (RadioButton) findViewById(R.id.radioButtonFemale);
-        spinnerActivityLevel = (Spinner) findViewById(R.id.spinnerActivityLevel);
+        spinnerActivityLevel = (MaterialSpinner) findViewById(R.id.spinnerActivityLevel);
         inputDateBirth = (TextView) findViewById(R.id.inputDateBirth);
         inputTargetWeight = (EditText) findViewById(R.id.inputTargetWeight);
         inputWeightLossByWeek = (EditText) findViewById(R.id.inputWeightLossByWeek);
@@ -156,7 +156,7 @@ public class EnterBasicDataActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                inputDateBirth.setText(String.valueOf(day)+"/"+String.valueOf(month)+"/"+String.valueOf(year));
+                                inputDateBirth.setText(String.valueOf(year) + "-"+String.valueOf(month)+"-" + String.valueOf(day));
                             }
                         }, year, month, day);
                 datePicker.show();

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kalkulator kalorii</string>
+    <string name="app_name">FitApp</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string-array name="levelActivity">
