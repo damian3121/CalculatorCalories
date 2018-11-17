@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new ProgressFragment()).commit();
                 break;
             case R.id.addProduct:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new AddProductFragment()).commit();
+                Intent i=new Intent(getApplicationContext(),activityAddProduct.class);
+                startActivity(i);
                 break;
             case R.id.addMeals:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
