@@ -1,39 +1,31 @@
 package com.mscisz.damian.calculator;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.text.format.Time;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.jar.Attributes;
 
-import static android.content.ContentValues.TAG;
-
-public class AddMealFragment extends Fragment {
+public class ActivityAddMeal extends AppCompatActivity {
 
     private ExpandableListView listView;
     private ExpandableListAdapter listAdapter;
     private List<String> listDataHeader;
     private HashMap<String,List<String>> listDataChild;
-    private DatabaseHelper myDb = new DatabaseHelper( getActivity() );
+    private DatabaseHelper myDb = new DatabaseHelper( this );
 
     private List <String> breakfast = new ArrayList<String>();
     private List <String> elevenses = new ArrayList<String>();
@@ -48,23 +40,21 @@ public class AddMealFragment extends Fragment {
     private TextView inputDate;
     private TextView confirmMeal;
     private FloatingActionButton fabAddMeal;
-    Dialog popupDialog;
+    private Dialog popupDialog;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        myDb = new DatabaseHelper(getActivity());
-        popupDialog = new Dialog( getActivity() );
-    }
+        setContentView( R.layout.activity_add_meal );
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate( R.layout.fragment_add_meal, container, false );
-        listView = (ExpandableListView) v.findViewById( R.id.lvExp);
-        inputDate = (TextView) v.findViewById(R.id.inputDate);
-        fabAddMeal = (FloatingActionButton) v.findViewById( R.id.fabAddMeal );
+        myDb = new DatabaseHelper(this);
+        popupDialog = new Dialog( this );
+
+        listView = (ExpandableListView) findViewById( R.id.lvExp);
+        inputDate = (TextView) findViewById(R.id.inputDate);
+        fabAddMeal = (FloatingActionButton) findViewById( R.id.fabAddMeal );
 
         Calendar calendar = Calendar.getInstance();
         year = calendar.get( Calendar.YEAR );
@@ -78,10 +68,8 @@ public class AddMealFragment extends Fragment {
         ShowPopup();
         initData();
 
-        listAdapter = new ExpandableListAdapter( getActivity(),listDataHeader, listDataChild );
+        listAdapter = new ExpandableListAdapter( this, listDataHeader, listDataChild );
         listView.setAdapter( listAdapter );
-
-        return v;
     }
 
     private void initData() {
@@ -136,7 +124,7 @@ public class AddMealFragment extends Fragment {
             public void onClick(View v) {
 
                 DatePickerDialog dialog = new DatePickerDialog(
-                        getActivity(),
+                        ActivityAddMeal.this,
                         android.R.style.Theme_Material_Dialog_MinWidth,
                         mDateSetListener,
                         year,month,day);
@@ -176,5 +164,16 @@ public class AddMealFragment extends Fragment {
                 popupDialog.show();
             }
         } );
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

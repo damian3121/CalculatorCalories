@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddMealFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".ActivityAddMeal"
+    android:orientation="vertical">
 
     <ExpandableListView
         android:layout_marginTop="50dp"
@@ -32,4 +32,5 @@
         android:layout_marginBottom="25dp"
         android:clickable="true"
         android:src="@drawable/ic_add_black_24dp" />
+
 </FrameLayout>
