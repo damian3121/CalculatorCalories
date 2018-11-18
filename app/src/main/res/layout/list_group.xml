@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
 
     android:padding="8dp"
-    android:background="@color/colorPrimary">
+    android:background="#be29ec">
     
     <TextView
         android:id="@+id/lblListHeader"

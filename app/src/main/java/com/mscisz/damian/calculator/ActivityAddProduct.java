@@ -1,20 +1,15 @@
 package com.mscisz.damian.calculator;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
-public class activityAddProduct extends AppCompatActivity {
+public class ActivityAddProduct extends AppCompatActivity {
 
     DatabaseHelper myDb;
     EditText inputNameFood;
@@ -43,7 +38,7 @@ public class activityAddProduct extends AppCompatActivity {
                     boolean res = myDb.insertData( inputNameFood.getText().toString(),
                             Integer.parseInt( inputCaloriesValue.getText().toString() ) );
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activityAddProduct.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAddProduct.this);
                     builder.setCancelable( true );
                     if (!res) {
                         builder.setTitle( "Uwaga" );

@@ -14,7 +14,6 @@
         android:id="@+id/lblListItem"
         android:gravity="center_vertical"
         android:textSize="16dp"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        />
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
 
 </android.support.constraint.ConstraintLayout>

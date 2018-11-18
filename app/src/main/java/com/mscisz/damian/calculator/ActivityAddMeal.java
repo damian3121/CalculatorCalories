@@ -1,47 +1,33 @@
 package com.mscisz.damian.calculator;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.ExpandableListView;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
+
+import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class ActivityAddMeal extends AppCompatActivity {
 
-    private ExpandableListView listView;
-    private ExpandableListAdapter listAdapter;
-    private List<String> listDataHeader;
-    private HashMap<String,List<String>> listDataChild;
-    private DatabaseHelper myDb = new DatabaseHelper( this );
-
-    private List <String> breakfast = new ArrayList<String>();
-    private List <String> elevenses = new ArrayList<String>();
-    private List <String> dinner = new ArrayList<String>();
-    private List <String> afternoonTea = new ArrayList<String>();
-    private List <String> supper = new ArrayList<String>();
+    private MaterialSpinner spinnerTypeOfMeal;
+    private TextView inputDateAddMeal;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private AutoCompleteTextView autoCompleteSearchProduct;
+    private EditText amountOfMeal;
+    DatabaseHelper myDb;
 
     int day;
     int month;
     int year;
-
-    private TextView inputDate;
-    private TextView confirmMeal;
-    private FloatingActionButton fabAddMeal;
-    private Dialog popupDialog;
-    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,121 +35,15 @@ public class ActivityAddMeal extends AppCompatActivity {
         setContentView( R.layout.activity_add_meal );
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        spinnerTypeOfMeal = (MaterialSpinner) findViewById( R.id.spinnerTypeOfMeal );
+        inputDateAddMeal = (TextView) findViewById( R.id.inputDateAddMeal );
+        autoCompleteSearchProduct = (AutoCompleteTextView) findViewById( R.id.autoCompleteSearchProduct );
+        amountOfMeal = (EditText) findViewById( R.id.amountOfMeal );
         myDb = new DatabaseHelper(this);
-        popupDialog = new Dialog( this );
 
-        listView = (ExpandableListView) findViewById( R.id.lvExp);
-        inputDate = (TextView) findViewById(R.id.inputDate);
-        fabAddMeal = (FloatingActionButton) findViewById( R.id.fabAddMeal );
-
-        Calendar calendar = Calendar.getInstance();
-        year = calendar.get( Calendar.YEAR );
-        month = calendar.get( Calendar.MONTH );
-        day = calendar.get( Calendar.DAY_OF_MONTH );
-
-        String date = year + "-" + (month+1) + "-" + day;
-        inputDate.setText( date );
-
-        showDialogOnInputClick();
-        ShowPopup();
-        initData();
-
-        listAdapter = new ExpandableListAdapter( this, listDataHeader, listDataChild );
-        listView.setAdapter( listAdapter );
-    }
-
-    private void initData() {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
-
-        listDataHeader.add( "Śniadanie" );
-        listDataHeader.add( "Drugie śniadanie" );
-        listDataHeader.add( "Obiad" );
-        listDataHeader.add( "Podwieczorek" );
-        listDataHeader.add( "Kolacja" );
-
-        listDataChild.put(listDataHeader.get(0), breakfast);
-        listDataChild.put(listDataHeader.get(1), elevenses);
-        listDataChild.put(listDataHeader.get(2), dinner);
-        listDataChild.put(listDataHeader.get(3), afternoonTea);
-        listDataChild.put(listDataHeader.get(4), supper );
-    }
-
-    public void viewAllMealByDate(String typeMeal, String date){
-        Cursor cursor = myDb.getMealByDate(typeMeal, date);
-        String result_1 = "";
-
-        while (cursor.moveToNext()) {
-            result_1 = "";
-
-            result_1 = cursor.getString( 0 );
-
-            switch(typeMeal){
-                case "sniadanie":
-                    breakfast.add( result_1 );
-                    break;
-                case "sniadanie_2":
-                    elevenses.add( result_1 );
-                    break;
-                case "obiad":
-                    dinner.add( result_1 );
-                    break;
-                case "podwieczorek":
-                    afternoonTea.add( result_1 );
-                    break;
-                case "kolacja":
-                    supper.add( result_1 );
-                    break;
-            }
-        }
-    }
-
-    private void showDialogOnInputClick(){
-        inputDate.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                DatePickerDialog dialog = new DatePickerDialog(
-                        ActivityAddMeal.this,
-                        android.R.style.Theme_Material_Dialog_MinWidth,
-                        mDateSetListener,
-                        year,month,day);
-                dialog.show();
-            }
-        } );
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int pYear, int pMonth, int pDayOfMonth) {
-                pMonth = pMonth + 1;
-                String date = pYear + "-" + pMonth + "-" + pDayOfMonth;
-                inputDate.setText( date );
-
-                breakfast.clear();
-                elevenses.clear();
-                dinner.clear();
-                afternoonTea.clear();
-                supper.clear();
-
-                viewAllMealByDate("sniadanie", inputDate.getText().toString());
-                viewAllMealByDate("sniadanie_2", inputDate.getText().toString());
-                viewAllMealByDate("obiad", inputDate.getText().toString());
-                viewAllMealByDate("podwieczorek", inputDate.getText().toString());
-                viewAllMealByDate("kolacja", inputDate.getText().toString());
-            }
-        };
-    }
-
-    public void ShowPopup(){
-        popupDialog.setContentView( R.layout.custom_popup );
-
-        fabAddMeal.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupDialog.getWindow().setBackgroundDrawable( new ColorDrawable( Color.TRANSPARENT ) );
-                popupDialog.show();
-            }
-        } );
+        showCalendarDialogAndSetDate();
+        setActualDate();
+        autoCompleteInputProduct();
     }
 
     @Override
@@ -175,5 +55,51 @@ public class ActivityAddMeal extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showCalendarDialogAndSetDate(){
+        inputDateAddMeal.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        ActivityAddMeal.this,
+                        android.R.style.Theme_Material_Dialog_MinWidth,
+                        mDateSetListener,
+                        year,month,day);
+                dialog.show();
+            }
+        } );
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int pYear, int pMonth, int pDayOfMonth) {
+                pMonth = pMonth + 1;
+                String date = pYear + "-" + pMonth + "-" + pDayOfMonth;
+                inputDateAddMeal.setText( date );
+            }
+        };
+    }
+
+    private void setActualDate(){
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get( Calendar.YEAR );
+        month = calendar.get( Calendar.MONTH );
+        day = calendar.get( Calendar.DAY_OF_MONTH );
+
+        String date = year + "-" + (month+1) + "-" + day;
+        inputDateAddMeal.setText( date );
+    }
+
+    private void autoCompleteInputProduct(){
+        Cursor cursor = myDb.getAllProducts();
+        String[] products = new String[cursor.getCount()];
+
+        int i = 0;
+        while (cursor.moveToNext()) {
+            products[i++] = cursor.getString( 0 );
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, products);
+        autoCompleteSearchProduct.setAdapter( adapter );
     }
 }

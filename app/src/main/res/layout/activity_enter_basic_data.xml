@@ -55,9 +55,9 @@
             android:layout_height="wrap_content" >
 
             <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/spinnerActivityLevel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinnerActivityLevel"
                 android:layout_marginBottom="10dp"
                 android:entries="@array/levelActivity"
                 android:hint="Wybierz poziom aktywności" />

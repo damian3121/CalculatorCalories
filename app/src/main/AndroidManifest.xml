@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".EnterBasicDataActivity" />
-        <activity android:name=".activityAddProduct" />
+        <activity android:name=".ActivityAddProduct" />
+        <activity android:name=".ActivityShowMealByDate" />
         <activity android:name=".ActivityAddMeal"></activity>
     </application>
 
