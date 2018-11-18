@@ -1,9 +1,12 @@
 package com.mscisz.damian.calculator;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,19 +14,26 @@ import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
+
+import static android.widget.Toast.makeText;
 
 public class ActivityAddMeal extends AppCompatActivity {
 
     private MaterialSpinner spinnerTypeOfMeal;
     private TextView inputDateAddMeal;
+    private TextView confirmMeal;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private AutoCompleteTextView autoCompleteSearchProduct;
     private EditText amountOfMeal;
     DatabaseHelper myDb;
+    private List<String> products = new ArrayList<>();
 
     int day;
     int month;
@@ -39,11 +49,13 @@ public class ActivityAddMeal extends AppCompatActivity {
         inputDateAddMeal = (TextView) findViewById( R.id.inputDateAddMeal );
         autoCompleteSearchProduct = (AutoCompleteTextView) findViewById( R.id.autoCompleteSearchProduct );
         amountOfMeal = (EditText) findViewById( R.id.amountOfMeal );
+        confirmMeal = (TextView) findViewById( R.id.confirmMeal );
         myDb = new DatabaseHelper(this);
 
         showCalendarDialogAndSetDate();
         setActualDate();
         autoCompleteInputProduct();
+        addMeal();
     }
 
     @Override
@@ -92,14 +104,59 @@ public class ActivityAddMeal extends AppCompatActivity {
 
     private void autoCompleteInputProduct(){
         Cursor cursor = myDb.getAllProducts();
-        String[] products = new String[cursor.getCount()];
 
         int i = 0;
         while (cursor.moveToNext()) {
-            products[i++] = cursor.getString( 0 );
+            products.add( cursor.getString( 0 ) );
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, products);
         autoCompleteSearchProduct.setAdapter( adapter );
+    }
+
+    private void addMeal(){
+
+        confirmMeal.setOnClickListener( new View.OnClickListener() {
+            boolean result = false;
+            @Override
+            public void onClick(View v) {
+                // alert
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAddMeal.this);
+                builder.setCancelable( true );
+                if (!products.contains(autoCompleteSearchProduct.getText().toString())) {
+                    builder.setTitle( "Uwaga" );
+                    builder.setMessage( "Najpierw wprowadź produkt do bazy" );
+                    builder.setPositiveButton( "Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    } );
+                    builder.show();
+                } else {
+
+                    if(amountOfMeal.getText().length() != 0 &&
+                            autoCompleteSearchProduct.getTextSize() != 0){
+                        result = myDb.insertDataToMealTable( inputDateAddMeal.getText().toString(),
+                                spinnerTypeOfMeal.getSelectedItem().toString(),
+                                autoCompleteSearchProduct.getText().toString(),
+                                Integer.parseInt( amountOfMeal.getText().toString() ) );
+
+                        autoCompleteSearchProduct.setText( "" );
+                        amountOfMeal.setText( "" );
+                    }
+
+                    builder.setTitle( "Uwaga" );
+                    builder.setMessage( "Posiłek został dodany" );
+                    builder.setPositiveButton( "Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    } );
+                    builder.show();
+                }
+            }
+        } );
     }
 }
