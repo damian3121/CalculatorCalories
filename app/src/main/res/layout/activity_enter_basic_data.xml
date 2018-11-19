@@ -126,14 +126,14 @@
                 android:inputType="numberDecimal" />
         </android.support.design.widget.TextInputLayout >
 
-        <TextView
-            android:id="@+id/inputDateBirth"
+        <EditText
+            android:id="@+id/inputAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginBottom="10dp"
-            android:hint="Data urodzenia"
-            android:inputType="date"
+            android:hint="Podaj wiek"
+            android:inputType="number"
             android:textSize="18sp" />
 
         <Button

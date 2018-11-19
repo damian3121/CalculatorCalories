@@ -1,17 +1,14 @@
 package com.mscisz.damian.calculator;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.DatePicker;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import java.util.Calendar;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -23,10 +20,9 @@ public class EnterBasicDataActivity extends AppCompatActivity {
     private RadioButton radioButtonMale;
     private RadioButton radioButtonFemale;
     private MaterialSpinner spinnerActivityLevel;
-    private TextView inputDateBirth;
+    private EditText inputAge;
     private EditText inputTargetWeight;
     private EditText inputWeightLossByWeek;
-    int day, month, year;
 
 
     @Override
@@ -40,11 +36,9 @@ public class EnterBasicDataActivity extends AppCompatActivity {
         radioButtonMale = (RadioButton) findViewById(R.id.radioButtonMale);
         radioButtonFemale = (RadioButton) findViewById(R.id.radioButtonFemale);
         spinnerActivityLevel = (MaterialSpinner) findViewById(R.id.spinnerActivityLevel);
-        inputDateBirth = (TextView) findViewById(R.id.inputDateBirth);
+        inputAge = (EditText) findViewById(R.id.inputAge);
         inputTargetWeight = (EditText) findViewById(R.id.inputTargetWeight);
         inputWeightLossByWeek = (EditText) findViewById(R.id.inputWeightLossByWeek);
-
-        setDate();
     }
 
     private boolean validateInputName(){
@@ -132,36 +126,12 @@ public class EnterBasicDataActivity extends AppCompatActivity {
     }
 
     private boolean validateInputDate(){
-        if(inputDateBirth.getText().toString().isEmpty()){
-            inputDateBirth.setError("Wybierz datę urodzenia");
+        if(inputAge.getText().toString().isEmpty()){
+            inputAge.setError("Wybierz datę urodzenia");
             return false;
         }else{
             return true;
         }
-    }
-
-    private void setDate(){
-
-        Calendar mCurrentDate;
-        mCurrentDate = Calendar.getInstance();
-        day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
-        month = mCurrentDate.get(Calendar.MONTH);
-        year = mCurrentDate.get(Calendar.YEAR);
-
-        inputDateBirth.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePicker = new DatePickerDialog(EnterBasicDataActivity.this,AlertDialog.THEME_HOLO_DARK,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                inputDateBirth.setText(String.valueOf(year) + "-"+String.valueOf(month)+"-" + String.valueOf(day));
-                            }
-                        }, year, month, day);
-                datePicker.show();
-            }
-        });
     }
 
     public void buttonConfirmBasicData(View v) {
@@ -169,7 +139,6 @@ public class EnterBasicDataActivity extends AppCompatActivity {
         if (!validateInputName() || !validateInputHeight() || !validateSexRadioGroup()
                 || !validateInputWeightLossByWeek() || !validateInputWeight() || !validateInputTargetWeight()
                 || !validateInputDate()) {
-
             return;
         } else {
             SharedPreferences basicDataPref = getSharedPreferences("basicDataPref", MODE_PRIVATE);
@@ -179,16 +148,17 @@ public class EnterBasicDataActivity extends AppCompatActivity {
             editor.putInt("height" , Integer.parseInt(inputHeight.getText().toString()));
             editor.putString("activityLevel" ,spinnerActivityLevel.getSelectedItem().toString());
             if(radioButtonMale.isChecked()){
-                editor.putString("sex" ,"Mężczyzna");
+                editor.putString("sex" ,"men");
             }else{
-                editor.putString("sex" ,"Kobieta");
+                editor.putString("sex" ,"women");
             }
             editor.putFloat("inputWeightLossByWeek", Float.parseFloat(inputWeightLossByWeek.getText().toString()));
             editor.putFloat("inputWeight", Float.parseFloat(inputWeight.getText().toString()));
             editor.putFloat("inputTargetWeight", Float.parseFloat(inputTargetWeight.getText().toString()));
-            editor.putString("inputDateBirth" ,inputDateBirth.getText().toString());
+            editor.putInt("age" , Integer.parseInt( inputAge.getText().toString()));
 
             editor.apply();
+            editor.commit();
 
             Intent i = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(i);
