@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
     private TextView viewBilansCalories;
+    private TextView textP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         viewBilansCalories = (TextView) findViewById( R.id.viewBilansCalories );
+        textP = (TextView) findViewById( R.id.textP );
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             enterBasicData();
         }
 
+        setMainWelcomeText();
         viewBilansCalories.setText( String.valueOf(  setBilansCalories() ));
     }
 
@@ -87,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public double setBilansCalories(){
+    public int setBilansCalories(){
         double ppm = 0;
         double cpm = 0;
 
@@ -111,9 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             cpm = ppm * setActivityLevel(activityLevel);
         }
 
-        viewBilansCalories.setText( sex );
-
-        return cpm;
+        return (int)cpm;
     }
 
     public double setActivityLevel(String level){
@@ -132,5 +133,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 default:
                     return 0;
         }
+    }
+
+    public void setMainWelcomeText(){
+        SharedPreferences xpreferences = getSharedPreferences("basicDataPref",MODE_PRIVATE);
+
+        String setText = "Witaj " + xpreferences.getString("name", "unknown")
+                + "! " + "Do zrzucenia pozostało Ci " + (xpreferences.getFloat("inputWeight", 0) -
+                xpreferences.getFloat("inputTargetWeight", 0));
+
+        textP.setText( setText );
     }
 }
