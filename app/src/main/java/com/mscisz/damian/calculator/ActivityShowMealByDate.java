@@ -54,24 +54,24 @@ public class ActivityShowMealByDate extends AppCompatActivity {
         inputDate = (TextView) findViewById(R.id.inputDate);
         fabAddMeal = (FloatingActionButton) findViewById( R.id.fabAddMeal );
 
+        initData();
         setActualDate();
         showDialogOnInputClick();
         ShowPopup();
-        initData();
 
         listAdapter = new ExpandableListAdapter( this, listDataHeader, listDataChild );
         listView.setAdapter( listAdapter );
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
 
         viewAllMealByDate("sniadanie", inputDate.getText().toString());
         viewAllMealByDate("sniadanie_2", inputDate.getText().toString());
         viewAllMealByDate("obiad", inputDate.getText().toString());
         viewAllMealByDate("podwieczorek", inputDate.getText().toString());
         viewAllMealByDate("kolacja", inputDate.getText().toString());
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
 
     }
 
@@ -105,28 +105,30 @@ public class ActivityShowMealByDate extends AppCompatActivity {
 
     public void viewAllMealByDate(String typeMeal, String date){
         Cursor cursor = myDb.getMealByDate(typeMeal, date);
-        String result_1 = "";
+        String result_name = "";
+        int result_calories = 0;
 
         while (cursor.moveToNext()) {
-            result_1 = "";
+            result_name = "";
 
-            result_1 = cursor.getString( 0 );
+            result_name = cursor.getString( 0 );
+            result_calories = cursor.getInt( 1 );
 
             switch(typeMeal){
                 case "sniadanie":
-                    breakfast.add( result_1 );
+                    breakfast.add( result_name + " " + result_calories + " kalorii" );
                     break;
                 case "sniadanie_2":
-                    elevenses.add( result_1 );
+                    elevenses.add( result_name + " " + result_calories + " kalorii" );
                     break;
                 case "obiad":
-                    dinner.add( result_1 );
+                    dinner.add( result_name + " " + result_calories + " kalorii" );
                     break;
                 case "podwieczorek":
-                    afternoonTea.add( result_1 );
+                    afternoonTea.add( result_name + " " + result_calories + " kalorii" );
                     break;
                 case "kolacja":
-                    supper.add( result_1 );
+                    supper.add( result_name + " " + result_calories + " kalorii" );
                     break;
             }
         }
@@ -181,5 +183,9 @@ public class ActivityShowMealByDate extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void removeMeal(){
+//        listDataChild.
     }
 }

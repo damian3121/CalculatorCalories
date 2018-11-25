@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -132,10 +133,14 @@ public class ActivityAddMeal extends AppCompatActivity {
 
                     if(amountOfMeal.getText().length() != 0 &&
                             autoCompleteSearchProduct.getTextSize() != 0){
+                        int caloriesValue = Integer.parseInt( amountOfMeal.getText().toString() )
+                                * myDb.getCaloriesForProductByName(
+                                autoCompleteSearchProduct.getText().toString() );
+
                         result = myDb.insertDataToMealTable( inputDateAddMeal.getText().toString(),
                                 spinnerTypeOfMeal.getSelectedItem().toString(),
                                 autoCompleteSearchProduct.getText().toString(),
-                                Integer.parseInt( amountOfMeal.getText().toString() ) );
+                                caloriesValue );
 
                         autoCompleteSearchProduct.setText( "" );
                         amountOfMeal.setText( "" );

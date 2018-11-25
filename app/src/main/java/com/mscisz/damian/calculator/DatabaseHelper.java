@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String MEAL_ID = "ID";
     private static final String MEAL_DATE = "DATE";
     private static final String MEAL_TYPE = "MEAL_TYPE";
-    private static final String MEAL_AMOUNT = "MEAL_AMOUNT";
+    private static final String MEAL_AMOUNT = "ALL_CALORIES_AMOUNT";
     private static final String FOOD_NAME= F_NAME;
 
     private static final String CREATE_TABLE_FOOD = "CREATE TABLE "
@@ -97,7 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getMealByDate(String typeMeal, String date){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery( " select name from " + TABLE_MEAL_NAME
+        Cursor cursor = db.rawQuery( " select name, all_calories_amount from " + TABLE_MEAL_NAME
                 + " where date='" + date + "' and meal_type=" + "'" + typeMeal + "' ", null );
 
         return cursor;
@@ -108,5 +108,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery( " select name from " + TABLE_F_NAME , null );
 
         return cursor;
+    }
+
+    public int getCaloriesForProductByName(String mealName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( " select calories from " + TABLE_F_NAME +
+                " where name = '" + mealName + "' ", null );
+        cursor.moveToNext();
+
+        return cursor.getInt( 0 );
+    }
+
+    public void removeMeal(String name, String calories){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " DELETE FROM " + TABLE_MEAL_NAME +
+                " WHERE name='" + name + "' AND all_calories_amount='" + calories + "' ";
+        Log.d("jezdem_2", query);
+        db.execSQL( query );
     }
 }
