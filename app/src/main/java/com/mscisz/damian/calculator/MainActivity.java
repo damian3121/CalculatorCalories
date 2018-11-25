@@ -13,12 +13,17 @@ import android.content.SharedPreferences;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
     private TextView viewBilansCalories;
     private TextView textP;
+    private DatabaseHelper myDb;
+    private TextView substractCaloriesFromProduct;
+    private TextView resultCaloriesPerDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +37,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         viewBilansCalories = (TextView) findViewById( R.id.viewBilansCalories );
         textP = (TextView) findViewById( R.id.textP );
+        substractCaloriesFromProduct = (TextView) findViewById( R.id.substractCaloriesFromProduct );
+        resultCaloriesPerDay = (TextView) findViewById( R.id.resultCaloriesPerDay );
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationView navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
         drawer = (DrawerLayout) findViewById(R.id.drawer);
+        myDb = new DatabaseHelper( this );
 
         if(firstStart){
             Intent i=new Intent(getApplicationContext(),EnterBasicDataActivity.class);
@@ -46,7 +54,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         setMainWelcomeText();
+        setSubstractCaloriesFromProductByDate();
         viewBilansCalories.setText( String.valueOf(  setBilansCalories() ));
+        setActualResultCaloriesPerDay();
     }
 
     @Override
@@ -137,11 +147,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setMainWelcomeText(){
         SharedPreferences xpreferences = getSharedPreferences("basicDataPref",MODE_PRIVATE);
+        String date = setActualDate();
 
         String setText = "Witaj " + xpreferences.getString("name", "unknown")
-                + "! " + "Do zrzucenia pozostało Ci " + (xpreferences.getFloat("inputWeight", 0) -
-                xpreferences.getFloat("inputTargetWeight", 0));
+                + "! " + "Dziś jest " + date + "\nDo zrzucenia pozostało Ci " + (xpreferences.getFloat("inputWeight", 0) -
+                xpreferences.getFloat("inputTargetWeight", 0) + " kg");
 
-        textP.setText( setText );
+        textP.setText(setText);
+    }
+
+    public void setSubstractCaloriesFromProductByDate(){
+        myDb.getSubstractCaloriesFromProductByDate(setActualDate());
+        substractCaloriesFromProduct.setText( String.valueOf( myDb.getSubstractCaloriesFromProductByDate(setActualDate())) );
+
+    }
+
+    public String setActualDate(){
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get( Calendar.YEAR );
+        int month = calendar.get( Calendar.MONTH );
+        int day = calendar.get( Calendar.DAY_OF_MONTH );
+
+        return (year + "-" + (month+1) + "-" + day);
+    }
+
+    public void setActualResultCaloriesPerDay(){
+        int result = Integer.parseInt( viewBilansCalories.getText().toString() ) -
+                Integer.parseInt( substractCaloriesFromProduct.getText().toString() );
+
+        resultCaloriesPerDay.setText( String.valueOf( result ) );
     }
 }

@@ -38,7 +38,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="2dp" />
+                tools:layout_editor_absoluteY="2dp"
+                tools:ignore="MissingConstraints" />
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -51,7 +52,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.574"></android.support.constraint.ConstraintLayout>
+            app:layout_constraintVertical_bias="0.417"></android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/fragment_container"
@@ -63,7 +64,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.166"
+            app:layout_constraintVertical_bias="0.128"
             tools:ignore="MissingConstraints"
             tools:layout_conversion_absoluteHeight="46dp"
             tools:layout_conversion_absoluteWidth="384dp">

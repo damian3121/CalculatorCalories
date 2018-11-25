@@ -126,4 +126,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("jezdem_2", query);
         db.execSQL( query );
     }
+
+    public int getSubstractCaloriesFromProductByDate(String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( "select sum(all_calories_amount) from " + TABLE_MEAL_NAME +
+                " where date='" + date + "'", null );
+
+        cursor.moveToNext();
+        Log.d("damianek", cursor.getString( 0 ) );
+        return cursor.getInt( 0 );
+    }
 }
