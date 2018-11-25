@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Liczba spalonych kalorii"
+                android:hint="Spalone kalorie na 10 min aktywności"
                 android:inputType="number" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>

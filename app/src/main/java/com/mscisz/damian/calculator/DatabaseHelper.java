@@ -23,8 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String FOOD_NAME= F_NAME;
 
     // column of the activity table
-    private static final String TABLE_ACTIVITIES_NAME = "meal_table";
-    private static final String ACTIVITY_DATE = "DATE";
+    private static final String TABLE_ACTIVITIES_NAME = "activities_table";
     private static final String ALL_AMOUNT_ACTIVITIES = "ALL_CALORIES_AMOUNT";
     private static final String ACTIVITY_NAME= "ACTIVITY_NAME";
 
@@ -38,8 +37,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TABLE_F_NAME + "(" + F_NAME + ")" +");";
 
     private static final String CREATE_TABLE_ACTIVITIES = "CREATE TABLE "
-            + TABLE_ACTIVITIES_NAME + " (" + ACTIVITY_DATE + " DATE PRIMARY KEY," + ACTIVITY_NAME
-            + " VARCHAR " + ALL_AMOUNT_ACTIVITIES + "INTEGER" +");";
+            + TABLE_ACTIVITIES_NAME + " (" + ACTIVITY_NAME + " VARCHAR PRIMARY KEY,"
+            + ALL_AMOUNT_ACTIVITIES + " INTEGER" +");";
 
     private static final String DROP_TABLE_FOOD = " DROP TABLE IF EXIST "+ TABLE_F_NAME;
     private static final String DROP_TABLE_MEAL = " DROP TABLE IF EXIST "+ TABLE_MEAL_NAME;
@@ -107,10 +106,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertDataToActivityTable(String pDate, String pName, Integer pCalories){
+    public boolean insertDataToActivityTable( String pName, Integer pCalories){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ACTIVITY_DATE, pDate);
         contentValues.put(ACTIVITY_NAME, pName);
         contentValues.put(ALL_AMOUNT_ACTIVITIES, pCalories);
 
@@ -151,7 +149,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = " DELETE FROM " + TABLE_MEAL_NAME +
                 " WHERE name='" + name + "' AND all_calories_amount='" + calories + "' ";
-        Log.d("jezdem_2", query);
         db.execSQL( query );
     }
 
@@ -161,7 +158,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " where date='" + date + "'", null );
 
         cursor.moveToNext();
-        Log.d("damianek", cursor.getString( 0 ) );
         return cursor.getInt( 0 );
     }
 }
