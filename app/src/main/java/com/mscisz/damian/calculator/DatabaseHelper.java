@@ -22,6 +22,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String MEAL_AMOUNT = "ALL_CALORIES_AMOUNT";
     private static final String FOOD_NAME= F_NAME;
 
+    // column of the activity table
+    private static final String TABLE_ACTIVITIES_NAME = "meal_table";
+    private static final String ACTIVITY_DATE = "DATE";
+    private static final String ALL_AMOUNT_ACTIVITIES = "ALL_CALORIES_AMOUNT";
+    private static final String ACTIVITY_NAME= "ACTIVITY_NAME";
+
     private static final String CREATE_TABLE_FOOD = "CREATE TABLE "
             + TABLE_F_NAME + " (" + F_NAME + " VARCHAR PRIMARY KEY," + F_CALORIES
             + " INTEGER"+");";
@@ -31,8 +37,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + " DATE," + MEAL_TYPE + " VARCHAR," + FOOD_NAME + " VARCHAR," + MEAL_AMOUNT + " INTEGER, " + " FOREIGN KEY(" + FOOD_NAME + ") REFERENCES "
             + TABLE_F_NAME + "(" + F_NAME + ")" +");";
 
+    private static final String CREATE_TABLE_ACTIVITIES = "CREATE TABLE "
+            + TABLE_ACTIVITIES_NAME + " (" + ACTIVITY_DATE + " DATE PRIMARY KEY," + ACTIVITY_NAME
+            + " VARCHAR " + ALL_AMOUNT_ACTIVITIES + "INTEGER" +");";
+
     private static final String DROP_TABLE_FOOD = " DROP TABLE IF EXIST "+ TABLE_F_NAME;
     private static final String DROP_TABLE_MEAL = " DROP TABLE IF EXIST "+ TABLE_MEAL_NAME;
+    private static final String DROP_TABLE_ACTIVITIES = " DROP TABLE IF EXIST "+ TABLE_ACTIVITIES_NAME;
 
     public DatabaseHelper(Context context) {
         super( context, DATABASE_NAME, null, 1);
@@ -42,13 +53,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_FOOD);
         db.execSQL(CREATE_TABLE_MEAL);
-        Log.d("bazadanych", CREATE_TABLE_MEAL);
+        db.execSQL( CREATE_TABLE_ACTIVITIES );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DROP_TABLE_FOOD);
         db.execSQL(DROP_TABLE_MEAL);
+        db.execSQL( DROP_TABLE_ACTIVITIES );
         onCreate(db);
     }
 
@@ -87,6 +99,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         long res = db.insert( TABLE_MEAL_NAME, null, contentValues);
+
+        if(res == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean insertDataToActivityTable(String pDate, String pName, Integer pCalories){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ACTIVITY_DATE, pDate);
+        contentValues.put(ACTIVITY_NAME, pName);
+        contentValues.put(ALL_AMOUNT_ACTIVITIES, pCalories);
+
+        long res = db.insert( TABLE_ACTIVITIES_NAME, null, contentValues);
 
         if(res == -1){
             return false;
