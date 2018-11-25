@@ -2,6 +2,7 @@ package com.mscisz.damian.calculator;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -99,6 +100,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                                         String[] arr = lblListChild.getText().toString().split(" ", 0);
                                         Log.d("jezdem", arr[1]);
                                         myDb.removeMeal( arr[0], arr[1] );
+
+                                        Intent i = new Intent(context, ActivityShowMealByDate.class);
+                                        context.startActivity(i);
                                     }
                                 }
                         )
