@@ -77,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.mainPage:
+                Intent intentMainPage = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intentMainPage);
+                break;
             case R.id.addProduct:
                 Intent intentAddProduct = new Intent(getApplicationContext(), ActivityAddProduct.class);
                 startActivity(intentAddProduct);
@@ -84,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.addMeals:
                 Intent intentShowMeals = new Intent(getApplicationContext(), ActivityShowMealByDate.class);
                 startActivity(intentShowMeals);
+                break;
+            case R.id.addActivity:
+                Intent intentAddActivity = new Intent(getApplicationContext(), ActivityAddSports.class);
+                startActivity(intentAddActivity);
                 break;
         }
 

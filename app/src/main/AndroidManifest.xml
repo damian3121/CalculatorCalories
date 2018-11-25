@@ -19,7 +19,8 @@
         <activity android:name=".EnterBasicDataActivity" />
         <activity android:name=".ActivityAddProduct" />
         <activity android:name=".ActivityShowMealByDate" />
-        <activity android:name=".ActivityAddMeal"></activity>
+        <activity android:name=".ActivityAddMeal" />
+        <activity android:name=".ActivityAddSports"></activity>
     </application>
 
 </manifest>
