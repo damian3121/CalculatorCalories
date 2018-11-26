@@ -24,7 +24,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 public class ActivityAddMeal extends AppCompatActivity {
 
     private MaterialSpinner spinnerTypeOfMeal;
-    private TextView inputDateAddMeal;
+    private EditText inputDateAddMeal;
     private TextView confirmMeal;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private AutoCompleteTextView autoCompleteSearchProduct;
@@ -43,7 +43,7 @@ public class ActivityAddMeal extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         spinnerTypeOfMeal = (MaterialSpinner) findViewById( R.id.spinnerTypeOfMeal );
-        inputDateAddMeal = (TextView) findViewById( R.id.inputDateAddMeal );
+        inputDateAddMeal = (EditText) findViewById( R.id.inputDateAddMeal );
         autoCompleteSearchProduct = (AutoCompleteTextView) findViewById( R.id.autoCompleteSearchProduct );
         amountOfMeal = (EditText) findViewById( R.id.amountOfMeal );
         confirmMeal = (TextView) findViewById( R.id.confirmMeal );

@@ -20,7 +20,8 @@
         <activity android:name=".ActivityAddProduct" />
         <activity android:name=".ActivityShowMealByDate" />
         <activity android:name=".ActivityAddMeal" />
-        <activity android:name=".ActivityAddSports"></activity>
+        <activity android:name=".ActivityAddSports" />
+        <activity android:name=".ActivityPracticedSports"></activity>
     </application>
 
 </manifest>

@@ -2,11 +2,13 @@ package com.mscisz.damian.calculator;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -168,8 +170,27 @@ public class ActivityShowMealByDate extends AppCompatActivity {
         fabAddMeal.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentAddMeal = new Intent(getApplicationContext(), ActivityAddMeal.class);
-                startActivity(intentAddMeal);
+
+                AlertDialog.Builder b=  new  AlertDialog.Builder(ActivityShowMealByDate.this)
+                        .setTitle("Co chcesz dodać?")
+                        .setPositiveButton("Aktywność",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        Intent intentPracticedSports = new Intent(getApplicationContext(), ActivityPracticedSports.class);
+                                        startActivity(intentPracticedSports);
+                                    }
+                                }
+                        )
+                        .setNegativeButton("Posiłek",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        dialog.dismiss();
+                                        Intent intentAddMeal = new Intent(getApplicationContext(), ActivityAddMeal.class);
+                                        startActivity(intentAddMeal);
+                                    }
+                                }
+                        );
+                b.show();
             }
         } );
     }
