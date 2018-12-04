@@ -136,6 +136,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean insertDataToDailySportActivity( String pDate, String pName, Integer pCalories){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DAILY_SPORTS_DATE, pDate);
+        contentValues.put(SPORTS_NAME, pName);
+        contentValues.put(SPORTS_CALORIES_AMOUNT, pCalories);
+
+        long res = db.insert( TABLE_DAILY_SPORTS_NAME, null, contentValues);
+
+        if(res == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public Cursor getMealByDate(String typeMeal, String date){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery( " select name, all_calories_amount from " + TABLE_MEAL_NAME
@@ -151,10 +167,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getAllSportsActivities(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( " select activity_name from " + TABLE_ACTIVITIES_NAME , null );
+
+        return cursor;
+    }
+
     public int getCaloriesForProductByName(String mealName){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery( " select calories from " + TABLE_F_NAME +
                 " where name = '" + mealName + "' ", null );
+        cursor.moveToNext();
+
+        return cursor.getInt( 0 );
+    }
+
+    public int getCaloriesForSportsActivity(String sportName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( " select all_calories_amount from " + TABLE_ACTIVITIES_NAME +
+                " where activity_name = '" + sportName + "' ", null );
         cursor.moveToNext();
 
         return cursor.getInt( 0 );
