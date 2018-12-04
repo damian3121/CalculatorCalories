@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/mainPage" android:title="Strona główna" android:icon="@drawable/ic_home_black_24dp"></item>
-    <item android:id="@+id/progress" android:title="Postęp" android:icon="@drawable/ic_show_chart_black_24dp"></item>
     <item android:id="@+id/addProduct" android:title="Wprowadź produkt do bazy" android:icon="@drawable/ic_playlist_add_black_24dp"></item>
-    <item android:id="@+id/addMeals" android:title="Dodaj posiłek" android:icon="@drawable/ic_playlist_add_black_24dp"></item>
     <item android:id="@+id/addActivity" android:title="Wprowadź aktywność do bazy" android:icon="@drawable/ic_directions_run_black_24dp"></item>
+    <item android:id="@+id/addMeals" android:title="Dzienniczek" android:icon="@drawable/ic_playlist_add_black_24dp"></item>
+    <item android:id="@+id/progress" android:title="Postęp" android:icon="@drawable/ic_show_chart_black_24dp"></item>
 </menu>

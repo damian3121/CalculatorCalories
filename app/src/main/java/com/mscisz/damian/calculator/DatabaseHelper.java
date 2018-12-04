@@ -27,6 +27,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String ALL_AMOUNT_ACTIVITIES = "ALL_CALORIES_AMOUNT";
     private static final String ACTIVITY_NAME= "ACTIVITY_NAME";
 
+    // column of the sports table
+    private static final String TABLE_DAILY_SPORTS_NAME = "daily_sports_table";
+    private static final String DAILY_SPORTS_ID = "ID";
+    private static final String DAILY_SPORTS_DATE = "DAILY_SPORTS_DATE";
+    private static final String SPORTS_CALORIES_AMOUNT = "ALL_CALORIES_AMOUNT";
+    private static final String SPORTS_NAME = ACTIVITY_NAME;
+
     private static final String CREATE_TABLE_FOOD = "CREATE TABLE "
             + TABLE_F_NAME + " (" + F_NAME + " VARCHAR PRIMARY KEY," + F_CALORIES
             + " INTEGER"+");";
@@ -40,9 +47,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TABLE_ACTIVITIES_NAME + " (" + ACTIVITY_NAME + " VARCHAR PRIMARY KEY,"
             + ALL_AMOUNT_ACTIVITIES + " INTEGER" +");";
 
+    private static final String CREATE_TABLE_DAILY_SPORTS = "CREATE TABLE "
+            + TABLE_DAILY_SPORTS_NAME + " (" + DAILY_SPORTS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + DAILY_SPORTS_DATE
+            + " DATE," + SPORTS_NAME + " VARCHAR," + SPORTS_CALORIES_AMOUNT + " INTEGER, " + " FOREIGN KEY(" + SPORTS_NAME + ") REFERENCES "
+            + TABLE_ACTIVITIES_NAME + "(" + ACTIVITY_NAME + ")" +");";
+
     private static final String DROP_TABLE_FOOD = " DROP TABLE IF EXIST "+ TABLE_F_NAME;
     private static final String DROP_TABLE_MEAL = " DROP TABLE IF EXIST "+ TABLE_MEAL_NAME;
     private static final String DROP_TABLE_ACTIVITIES = " DROP TABLE IF EXIST "+ TABLE_ACTIVITIES_NAME;
+    private static final String DROP_TABLE_DAILY_SPORTS = " DROP TABLE IF EXIST "+ TABLE_DAILY_SPORTS_NAME;
 
     public DatabaseHelper(Context context) {
         super( context, DATABASE_NAME, null, 1);
@@ -53,6 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_FOOD);
         db.execSQL(CREATE_TABLE_MEAL);
         db.execSQL( CREATE_TABLE_ACTIVITIES );
+        db.execSQL( CREATE_TABLE_DAILY_SPORTS );
     }
 
     @Override
@@ -60,6 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_TABLE_FOOD);
         db.execSQL(DROP_TABLE_MEAL);
         db.execSQL( DROP_TABLE_ACTIVITIES );
+        db.execSQL( DROP_TABLE_DAILY_SPORTS );
         onCreate(db);
     }
 

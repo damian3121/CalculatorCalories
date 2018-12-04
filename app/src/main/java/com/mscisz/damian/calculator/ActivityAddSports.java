@@ -14,7 +14,7 @@ public class ActivityAddSports extends AppCompatActivity {
     DatabaseHelper myDb;
     EditText inputNameActivity;
     EditText inputCaloriesValue;
-    FloatingActionButton fab;
+    FloatingActionButton fabAddSport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class ActivityAddSports extends AppCompatActivity {
 
         inputNameActivity = (EditText) findViewById(R.id.inputNameActivity);
         inputCaloriesValue = (EditText) findViewById(R.id.inputCaloriesValue);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fabAddSport = (FloatingActionButton) findViewById(R.id.fabAddSport);
         myDb = new DatabaseHelper(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -42,11 +42,11 @@ public class ActivityAddSports extends AppCompatActivity {
     }
 
     public void addSportActivity(){
-        fab.setOnClickListener(new View.OnClickListener() {
+        fabAddSport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (inputNameActivity.getText().length() != 0 && inputCaloriesValue.getText().length() != 0) {
-                    boolean res = myDb.insertData( inputNameActivity.getText().toString(),
+                    boolean res = myDb.insertDataToActivityTable( inputNameActivity.getText().toString(),
                             Integer.parseInt( inputCaloriesValue.getText().toString() ) );
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(ActivityAddSports.this);
