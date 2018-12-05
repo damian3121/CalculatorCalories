@@ -98,8 +98,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                                     public void onClick(DialogInterface dialog, int whichButton) {
                                         myDb = new DatabaseHelper( context );
                                         String[] arr = lblListChild.getText().toString().split(" ", 0);
-                                        Log.d("jezdem", arr[1]);
                                         myDb.removeMeal( arr[0], arr[1] );
+                                        myDb.removeDailySportActivity( arr[0], arr[1] );
+
+                                        Log.d( "jojo1", arr[0] );
+                                        Log.d( "jojo2", arr[1] );
 
                                         Intent i = new Intent(context, ActivityShowMealByDate.class);
                                         context.startActivity(i);

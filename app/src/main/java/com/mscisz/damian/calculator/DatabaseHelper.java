@@ -160,6 +160,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getDailySportsActivityByDate(String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( " select activity_name, all_calories_amount from " + TABLE_DAILY_SPORTS_NAME
+                + " where daily_sports_date='" + date + "'", null );
+
+        return cursor;
+    }
+
     public Cursor getAllProducts(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery( " select name from " + TABLE_F_NAME , null );
@@ -196,6 +204,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = " DELETE FROM " + TABLE_MEAL_NAME +
                 " WHERE name='" + name + "' AND all_calories_amount='" + calories + "' ";
+        db.execSQL( query );
+    }
+
+    public void removeDailySportActivity(String name, String calories){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " DELETE FROM " + TABLE_DAILY_SPORTS_NAME +
+                " WHERE activity_name='" + name + "' AND all_calories_amount='" + calories + "' ";
         db.execSQL( query );
     }
 

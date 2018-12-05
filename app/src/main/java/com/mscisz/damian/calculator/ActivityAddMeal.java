@@ -153,8 +153,6 @@ public class ActivityAddMeal extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
-                            Intent i = new Intent(getBaseContext(), ActivityShowMealByDate.class);
-                            startActivity(i);
                         }
                     } );
                     builder.show();

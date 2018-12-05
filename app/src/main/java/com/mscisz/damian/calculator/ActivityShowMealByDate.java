@@ -35,6 +35,7 @@ public class ActivityShowMealByDate extends AppCompatActivity {
     private List <String> dinner = new ArrayList<String>();
     private List <String> afternoonTea = new ArrayList<String>();
     private List <String> supper = new ArrayList<String>();
+    private List <String> dailySports = new ArrayList<String>();
 
     int day;
     int month;
@@ -69,11 +70,13 @@ public class ActivityShowMealByDate extends AppCompatActivity {
         viewAllMealByDate("obiad", inputDate.getText().toString());
         viewAllMealByDate("podwieczorek", inputDate.getText().toString());
         viewAllMealByDate("kolacja", inputDate.getText().toString());
+        viewAllSportsActivity(inputDate.getText().toString());
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        initData();
 
     }
 
@@ -92,17 +95,26 @@ public class ActivityShowMealByDate extends AppCompatActivity {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
 
+        breakfast.clear();
+        elevenses.clear();
+        dinner.clear();
+        afternoonTea.clear();
+        supper.clear();
+        dailySports.clear();
+
         listDataHeader.add( "Śniadanie" );
         listDataHeader.add( "Drugie śniadanie" );
         listDataHeader.add( "Obiad" );
         listDataHeader.add( "Podwieczorek" );
         listDataHeader.add( "Kolacja" );
+        listDataHeader.add( "Aktywność sportowa" );
 
         listDataChild.put(listDataHeader.get(0), breakfast);
         listDataChild.put(listDataHeader.get(1), elevenses);
         listDataChild.put(listDataHeader.get(2), dinner);
         listDataChild.put(listDataHeader.get(3), afternoonTea);
         listDataChild.put(listDataHeader.get(4), supper );
+        listDataChild.put(listDataHeader.get(5), dailySports );
     }
 
     public void viewAllMealByDate(String typeMeal, String date){
@@ -136,6 +148,21 @@ public class ActivityShowMealByDate extends AppCompatActivity {
         }
     }
 
+    public void viewAllSportsActivity(String date){
+        Cursor cursor = myDb.getDailySportsActivityByDate(date);
+        String result_name = "";
+        int result_calories = 0;
+
+        while (cursor.moveToNext()) {
+            result_name = "";
+
+            result_name = cursor.getString( 0 );
+            result_calories = cursor.getInt( 1 );
+
+            dailySports.add( result_name + " " + result_calories + " kalorii" );
+        }
+    }
+
     private void showDialogOnInputClick(){
         inputDate.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -156,12 +183,6 @@ public class ActivityShowMealByDate extends AppCompatActivity {
                 pMonth = pMonth + 1;
                 String date = pYear + "-" + pMonth + "-" + pDayOfMonth;
                 inputDate.setText( date );
-
-                breakfast.clear();
-                elevenses.clear();
-                dinner.clear();
-                afternoonTea.clear();
-                supper.clear();
             }
         };
     }
@@ -204,9 +225,5 @@ public class ActivityShowMealByDate extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public void removeMeal(){
-//        listDataChild.
     }
 }

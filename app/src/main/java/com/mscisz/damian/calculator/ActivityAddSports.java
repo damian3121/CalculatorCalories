@@ -72,6 +72,8 @@ public class ActivityAddSports extends AppCompatActivity {
                         } );
                         builder.show();
                     }
+                    inputNameActivity.setText( "" );
+                    inputCaloriesValue.setText( "" );
                 }
             }
         });
