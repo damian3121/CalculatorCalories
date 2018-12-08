@@ -64,20 +64,18 @@ public class ActivityShowMealByDate extends AppCompatActivity {
 
         listAdapter = new ExpandableListAdapter( this, listDataHeader, listDataChild );
         listView.setAdapter( listAdapter );
-
-        viewAllMealByDate("sniadanie", inputDate.getText().toString());
-        viewAllMealByDate("sniadanie_2", inputDate.getText().toString());
-        viewAllMealByDate("obiad", inputDate.getText().toString());
-        viewAllMealByDate("podwieczorek", inputDate.getText().toString());
-        viewAllMealByDate("kolacja", inputDate.getText().toString());
-        viewAllSportsActivity(inputDate.getText().toString());
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         initData();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
     }
 
 
@@ -115,6 +113,13 @@ public class ActivityShowMealByDate extends AppCompatActivity {
         listDataChild.put(listDataHeader.get(3), afternoonTea);
         listDataChild.put(listDataHeader.get(4), supper );
         listDataChild.put(listDataHeader.get(5), dailySports );
+
+        viewAllMealByDate("sniadanie", inputDate.getText().toString());
+        viewAllMealByDate("sniadanie_2", inputDate.getText().toString());
+        viewAllMealByDate("obiad", inputDate.getText().toString());
+        viewAllMealByDate("podwieczorek", inputDate.getText().toString());
+        viewAllMealByDate("kolacja", inputDate.getText().toString());
+        viewAllSportsActivity(inputDate.getText().toString());
     }
 
     public void viewAllMealByDate(String typeMeal, String date){

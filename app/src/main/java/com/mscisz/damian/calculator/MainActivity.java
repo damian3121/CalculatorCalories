@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView textP;
     private DatabaseHelper myDb;
     private TextView substractCaloriesFromProduct;
+    private TextView addCaloriesFromActivity;
     private TextView resultCaloriesPerDay;
 
     @Override
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewBilansCalories = (TextView) findViewById( R.id.viewBilansCalories );
         textP = (TextView) findViewById( R.id.textP );
         substractCaloriesFromProduct = (TextView) findViewById( R.id.substractCaloriesFromProduct );
+        addCaloriesFromActivity = (TextView) findViewById( R.id.addCaloriesFromActivity );
         resultCaloriesPerDay = (TextView) findViewById( R.id.resultCaloriesPerDay );
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setMainWelcomeText();
         setSubstractCaloriesFromProductByDate();
+        setCaloriesFromSportActivityByDate();
         viewBilansCalories.setText( String.valueOf(  setBilansCalories() ));
         setActualResultCaloriesPerDay();
     }
@@ -65,6 +68,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onResume() {
+        super.onResume();
+        setSubstractCaloriesFromProductByDate();
+        setCaloriesFromSportActivityByDate();
+        viewBilansCalories.setText( String.valueOf(  setBilansCalories() ));
+        setActualResultCaloriesPerDay();
     }
 
     private void enterBasicData() {
@@ -170,6 +181,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void setCaloriesFromSportActivityByDate(){
+        myDb.getCaloriesFromSportActivityByDate(setActualDate());
+        addCaloriesFromActivity.setText( String.valueOf( myDb.getCaloriesFromSportActivityByDate(setActualDate())) );
+
+    }
+
     public String setActualDate(){
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get( Calendar.YEAR );
@@ -181,7 +198,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setActualResultCaloriesPerDay(){
         int result = Integer.parseInt( viewBilansCalories.getText().toString() ) -
-                Integer.parseInt( substractCaloriesFromProduct.getText().toString() );
+                Integer.parseInt( substractCaloriesFromProduct.getText().toString() ) +
+                Integer.parseInt( addCaloriesFromActivity.getText().toString());
 
         resultCaloriesPerDay.setText( String.valueOf( result ) );
     }

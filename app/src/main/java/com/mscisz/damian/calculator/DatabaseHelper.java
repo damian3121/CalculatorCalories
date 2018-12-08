@@ -222,4 +222,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToNext();
         return cursor.getInt( 0 );
     }
+
+    public int getCaloriesFromSportActivityByDate(String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( "select sum(all_calories_amount) from " + TABLE_DAILY_SPORTS_NAME +
+                " where daily_sports_date='" + date + "'", null );
+
+        cursor.moveToNext();
+        return cursor.getInt( 0 );
+    }
 }

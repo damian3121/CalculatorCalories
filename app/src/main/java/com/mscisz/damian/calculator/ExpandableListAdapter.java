@@ -101,10 +101,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                                         myDb.removeMeal( arr[0], arr[1] );
                                         myDb.removeDailySportActivity( arr[0], arr[1] );
 
-                                        Log.d( "jojo1", arr[0] );
-                                        Log.d( "jojo2", arr[1] );
-
-                                        Intent i = new Intent(context, ActivityShowMealByDate.class);
+                                        Intent i = new Intent(context, MainActivity.class);
                                         context.startActivity(i);
                                     }
                                 }
