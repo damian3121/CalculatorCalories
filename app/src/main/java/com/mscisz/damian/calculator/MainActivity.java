@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setMainWelcomeText();
         setSubstractCaloriesFromProductByDate();
-        setCaloriesFromSportActivityByDate();
+        setCaloriesFromSportActivityByDate(); // w resume tez jest set view bilans calories
         viewBilansCalories.setText( String.valueOf(  setBilansCalories() ));
         setActualResultCaloriesPerDay();
         addDailyStatistics();
@@ -144,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         } ).start();
+
+        setMainWelcomeText();
     }
 
     private void enterBasicData() {
@@ -176,6 +179,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intentAddStatisticsProgress = new Intent(getApplicationContext(), ActivityProgress.class);
                 startActivity(intentAddStatisticsProgress);
                 break;
+            case R.id.editData:
+                Intent intentEditUserData = new Intent(getApplicationContext(), ActivityEditUserData.class);
+                startActivity(intentEditUserData);
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -192,27 +199,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public int setBilansCalories(){
+        SharedPreferences editPred = getSharedPreferences("editDataPref", MODE_PRIVATE);
+        int caloriesValue = editPred.getInt("dailyCalories", 0);
+
         double ppm = 0;
         double cpm = 0;
 
-        SharedPreferences myPreferences = getSharedPreferences("basicDataPref", MODE_PRIVATE);
-        String sex = myPreferences.getString("sex", "unknown");
+        if(caloriesValue == 0){
 
-        Float weight = myPreferences.getFloat("inputWeight",
-                0);
-        Integer height = myPreferences.getInt("height",
-                0);
-        Integer age = myPreferences.getInt("age",
-                0);
-        String activityLevel = myPreferences.getString("activityLevel",
-                "unknown");
+            SharedPreferences myPreferences = getSharedPreferences("basicDataPref", MODE_PRIVATE);
+            String sex = myPreferences.getString("sex", "unknown");
 
-        if( sex.equals( "men" )){
-            ppm = 665.09 + (9.56*weight) + (1.85*height) - (4.68*age);
-            cpm = ppm * setActivityLevel(activityLevel);
+            Float weight = myPreferences.getFloat("inputWeight",
+                    0);
+            Integer height = myPreferences.getInt("height",
+                    0);
+            Integer age = myPreferences.getInt("age",
+                    0);
+            String activityLevel = myPreferences.getString("activityLevel",
+                    "unknown");
+
+            if( sex.equals( "men" )){
+                ppm = 665.09 + (9.56*weight) + (1.85*height) - (4.68*age);
+                cpm = ppm * setActivityLevel(activityLevel);
+            }else{
+                ppm = 66.47 + (13.75*weight) + (5*height) - (6.75*age);
+                cpm = ppm * setActivityLevel(activityLevel);
+            }
         }else{
-            ppm = 66.47 + (13.75*weight) + (5*height) - (6.75*age);
-            cpm = ppm * setActivityLevel(activityLevel);
+            cpm = caloriesValue;
         }
 
         return (int)cpm;

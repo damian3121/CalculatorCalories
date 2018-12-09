@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mscisz.damian.calculator">
 
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"></uses-permission>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -28,10 +28,12 @@
         <activity android:name=".ActivityAddMeal" />
         <activity android:name=".ActivityAddSports" />
         <activity android:name=".ActivityPracticedSports" />
-        <activity android:name=".ActivityProgress"></activity>
+        <activity android:name=".ActivityProgress" />
+        <activity android:name=".Repeating_activity" />
 
-        <activity android:name=".Repeating_activity"/>
-        <receiver android:name=".Notification_receiver"/>
+        <receiver android:name=".Notification_receiver" />
+
+        <activity android:name=".ActivityEditUserData"></activity>
     </application>
 
 </manifest>
