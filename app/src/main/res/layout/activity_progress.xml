@@ -1,9 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F3F3F3"
     tools:context=".ActivityProgress">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/barToAchiveGoal"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chartOfActivityCalories"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/headerProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:padding="5dp"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/chartOfActivityCalories"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="20dp"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/barToAchiveGoal"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/headerOfActivityCalories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                android:text="Ilość spożytych kalorii dla pięciu ostatnich dni"
+                android:textColor="#000000"
+                android:textSize="16dp" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph"
+                android:layout_width="match_parent"
+                android:layout_height="200dip" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/chartOfActivityCalories2"
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:layout_marginTop="20dp"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/chartOfActivityCalories"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/headerOfActivityCalories2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                android:text="Ilość spalonych kalorii podczas treningu dla pięciu ostatnich dni"
+                android:textColor="#000000"
+                android:textSize="16dp" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph2"
+                android:layout_width="match_parent"
+                android:layout_height="200dip" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/chartOfActivity"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="20dp"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/headerOfWeightChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                android:text="Wykres wahania wagi dla pięciu ostatnich dni"
+                android:textColor="#000000"
+                android:textSize="16dp" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph3"
+                android:layout_width="match_parent"
+                android:layout_height="200dip" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

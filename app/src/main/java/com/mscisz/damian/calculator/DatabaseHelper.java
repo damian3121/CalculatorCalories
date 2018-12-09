@@ -60,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TABLE_ACTIVITIES_NAME + "(" + ACTIVITY_NAME + ")" +");";
 
     private static final String CREATE_TABLE_STATISTICS_NAME= "CREATE TABLE "
-            + TABLE_STATISTICS_NAME + " (" + STATISTICS_DATE + " VARCHAR PRIMARY KEY,"
+            + TABLE_STATISTICS_NAME + " (" + STATISTICS_DATE + " DATE PRIMARY KEY,"
             + AMOUNT_OF_ACTIVITY_TYPE_CALORIES + " INTEGER, " + AMOUNT_OF_GET_CALORIES + " INTEGER,"
             + ACTUAL_WEIGHT + " FLOAT" + ");";
 
@@ -282,5 +282,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.moveToNext();
         return cursor.getInt( 0 );
+    }
+
+    public float getActualWeight(String pDate){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( "select actual_weight from " + TABLE_STATISTICS_NAME +
+                " where date='" + pDate + "'", null );
+
+        cursor.moveToNext();
+        return cursor.getFloat( 0 );
+    }
+
+    public int getCaloriesAmountPerDay(String pDate){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( "select amount_of_get_calories from " + TABLE_STATISTICS_NAME +
+                " where date = '" + pDate + "'", null );
+        cursor.moveToNext();
+
+        if(cursor.getCount() == 0){
+            return 0;
+        }
+        else{
+            return cursor.getInt( 0 );
+        }
+    }
+
+    public int getCaloriesFromActivitiesPerDay(String pDate){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( "select amount_of_activity_calories from " + TABLE_STATISTICS_NAME +
+                " where date = '" + pDate + "'", null );
+        cursor.moveToNext();
+
+        if(cursor.getCount() == 0){
+            return 0;
+        }
+        else{
+            return cursor.getInt( 0 );
+        }
+    }
+
+    public float getActualWeightPerDay(String pDate){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery( "select actual_weight from " + TABLE_STATISTICS_NAME +
+                " where date = '" + pDate + "'", null );
+        cursor.moveToNext();
+
+        if(cursor.getCount() == 0){
+            return 0;
+        }
+        else{
+            return cursor.getFloat( 0 );
+        }
     }
 }
