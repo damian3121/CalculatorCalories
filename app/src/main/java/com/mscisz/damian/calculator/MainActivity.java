@@ -1,10 +1,11 @@
 package com.mscisz.damian.calculator;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         } ).start();
+
+        setNotification();
     }
 
     private Handler handler = new Handler(  ){
@@ -318,5 +320,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         } );
+    }
+
+    private void setNotification() {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set( Calendar.HOUR_OF_DAY, 19);
+        calendar.set( Calendar.MINUTE, 59 );
+        calendar.set( Calendar.SECOND, 30 );
+
+        Intent intent = new Intent( getApplicationContext(), Notification_receiver.class );
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast( getApplicationContext(), 100,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT );
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService( ALARM_SERVICE );
+        alarmManager.setRepeating( AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,pendingIntent );
     }
 }
