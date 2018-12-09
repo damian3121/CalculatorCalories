@@ -134,9 +134,9 @@ public class ActivityAddMeal extends AppCompatActivity {
 
                     if(amountOfMeal.getText().length() != 0 &&
                             autoCompleteSearchProduct.getTextSize() != 0){
-                        int caloriesValue = Integer.parseInt( amountOfMeal.getText().toString() )
+                        int caloriesValue = (Integer.parseInt( amountOfMeal.getText().toString() )
                                 * myDb.getCaloriesForProductByName(
-                                autoCompleteSearchProduct.getText().toString() );
+                                autoCompleteSearchProduct.getText().toString() )) / 100;
 
                         result = myDb.insertDataToMealTable( inputDateAddMeal.getText().toString(),
                                 spinnerTypeOfMeal.getSelectedItem().toString(),

@@ -34,6 +34,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SPORTS_CALORIES_AMOUNT = "ALL_CALORIES_AMOUNT";
     private static final String SPORTS_NAME = ACTIVITY_NAME;
 
+    // column of the statistics table
+    private static final String TABLE_STATISTICS_NAME = "statistics_table";
+    private static final String STATISTICS_DATE = "DATE";
+    private static final String AMOUNT_OF_ACTIVITY_TYPE_CALORIES = "AMOUNT_OF_ACTIVITY_CALORIES";
+    private static final String AMOUNT_OF_GET_CALORIES = "AMOUNT_OF_GET_CALORIES";
+    private static final String ACTUAL_WEIGHT = "ACTUAL_WEIGHT";
+
     private static final String CREATE_TABLE_FOOD = "CREATE TABLE "
             + TABLE_F_NAME + " (" + F_NAME + " VARCHAR PRIMARY KEY," + F_CALORIES
             + " INTEGER"+");";
@@ -52,10 +59,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + " DATE," + SPORTS_NAME + " VARCHAR," + SPORTS_CALORIES_AMOUNT + " INTEGER, " + " FOREIGN KEY(" + SPORTS_NAME + ") REFERENCES "
             + TABLE_ACTIVITIES_NAME + "(" + ACTIVITY_NAME + ")" +");";
 
+    private static final String CREATE_TABLE_STATISTICS_NAME= "CREATE TABLE "
+            + TABLE_STATISTICS_NAME + " (" + STATISTICS_DATE + " VARCHAR PRIMARY KEY,"
+            + AMOUNT_OF_ACTIVITY_TYPE_CALORIES + " INTEGER, " + AMOUNT_OF_GET_CALORIES + " INTEGER,"
+            + ACTUAL_WEIGHT + " FLOAT" + ");";
+
     private static final String DROP_TABLE_FOOD = " DROP TABLE IF EXIST "+ TABLE_F_NAME;
     private static final String DROP_TABLE_MEAL = " DROP TABLE IF EXIST "+ TABLE_MEAL_NAME;
     private static final String DROP_TABLE_ACTIVITIES = " DROP TABLE IF EXIST "+ TABLE_ACTIVITIES_NAME;
     private static final String DROP_TABLE_DAILY_SPORTS = " DROP TABLE IF EXIST "+ TABLE_DAILY_SPORTS_NAME;
+    private static final String DROP_TABLE_STATISTICS_NAME = " DROP TABLE IF EXIST "+ TABLE_STATISTICS_NAME;
 
     public DatabaseHelper(Context context) {
         super( context, DATABASE_NAME, null, 1);
@@ -67,6 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_MEAL);
         db.execSQL( CREATE_TABLE_ACTIVITIES );
         db.execSQL( CREATE_TABLE_DAILY_SPORTS );
+        db.execSQL( CREATE_TABLE_STATISTICS_NAME );
     }
 
     @Override
@@ -75,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_TABLE_MEAL);
         db.execSQL( DROP_TABLE_ACTIVITIES );
         db.execSQL( DROP_TABLE_DAILY_SPORTS );
+        db.execSQL( DROP_TABLE_STATISTICS_NAME );
         onCreate(db);
     }
 
@@ -85,6 +100,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(F_CALORIES, pCalories);
 
         long res = db.insert( TABLE_F_NAME, null, contentValues);
+
+        if(res == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean insertDataToStatisticsTable(String pDate, Integer pAmountOfBurnCalories,
+                                               Integer pAmountOfCaloriesFromActivities, float pActualWeight){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(STATISTICS_DATE, pDate);
+        contentValues.put(AMOUNT_OF_ACTIVITY_TYPE_CALORIES, pAmountOfBurnCalories);
+        contentValues.put(AMOUNT_OF_GET_CALORIES, pAmountOfCaloriesFromActivities);
+        contentValues.put(ACTUAL_WEIGHT, pActualWeight);
+
+        long res = db.insert( TABLE_STATISTICS_NAME, null, contentValues);
+
+        if(res == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean updateDataToStatisticsTable(String pDate, Integer pAmountOfBurnCalories,
+                                               Integer pAmountOfCaloriesFromActivities, Float pActualWeight){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(STATISTICS_DATE, pDate);
+        contentValues.put(AMOUNT_OF_ACTIVITY_TYPE_CALORIES, pAmountOfBurnCalories);
+        contentValues.put(AMOUNT_OF_GET_CALORIES, pAmountOfCaloriesFromActivities);
+        contentValues.put(ACTUAL_WEIGHT, pActualWeight);
+
+        long res = db.update( TABLE_STATISTICS_NAME, contentValues, "DATE = ?",
+                new String[] { pDate });
 
         if(res == -1){
             return false;

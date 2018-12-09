@@ -1,19 +1,28 @@
 package com.mscisz.damian.calculator;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.SharedPreferences;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
+
+import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
@@ -25,6 +34,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView substractCaloriesFromProduct;
     private TextView addCaloriesFromActivity;
     private TextView resultCaloriesPerDay;
+    private RingProgressBar ringProgressBar;
+    private RingProgressBar ringProgressBar2;
+    private EditText inputActualWeight;
+    private TextView confirmWeight;
+    int progress = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         substractCaloriesFromProduct = (TextView) findViewById( R.id.substractCaloriesFromProduct );
         addCaloriesFromActivity = (TextView) findViewById( R.id.addCaloriesFromActivity );
         resultCaloriesPerDay = (TextView) findViewById( R.id.resultCaloriesPerDay );
+        ringProgressBar = (RingProgressBar) findViewById( R.id.progress_bar );
+        ringProgressBar2 = (RingProgressBar) findViewById( R.id.progress_bar2 );
+        inputActualWeight = (EditText) findViewById( R.id.inputActualWeight );
+        confirmWeight = (TextView) findViewById( R.id.confirmWeight );
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -60,7 +78,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setCaloriesFromSportActivityByDate();
         viewBilansCalories.setText( String.valueOf(  setBilansCalories() ));
         setActualResultCaloriesPerDay();
+        addDailyStatistics();
+
+        new Thread( new Runnable() {
+            @Override
+            public void run() {
+                progress = 0;
+                for(int i = 0; i < 100; i++){
+                    try{
+                        Thread.sleep( 200 );
+                        handler.sendEmptyMessage( 0 );
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } ).start();
     }
+
+    private Handler handler = new Handler(  ){
+        @Override
+        public void handleMessage(Message message){
+            if(Integer.parseInt( viewBilansCalories.getText().toString()) != 0) {
+                if (message.what == 0) {
+                    if (progress < 100 - (Integer.parseInt( resultCaloriesPerDay.getText().toString() ) * 100) /
+                            Integer.parseInt( viewBilansCalories.getText().toString() )) {
+                        progress += 1;
+                        ringProgressBar.setProgress( progress );
+                        ringProgressBar2.setProgress( progress );
+                    }
+                }
+            }
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -76,6 +126,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setCaloriesFromSportActivityByDate();
         viewBilansCalories.setText( String.valueOf(  setBilansCalories() ));
         setActualResultCaloriesPerDay();
+        addDailyStatistics();
+
+        new Thread( new Runnable() {
+            @Override
+            public void run() {
+                progress = 0;
+                for(int i = 0; i < 100; i++){
+                    try{
+                        Thread.sleep( 130 );
+                        handler.sendEmptyMessage( 0 );
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } ).start();
     }
 
     private void enterBasicData() {
@@ -202,5 +268,51 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Integer.parseInt( addCaloriesFromActivity.getText().toString());
 
         resultCaloriesPerDay.setText( String.valueOf( result ) );
+    }
+
+    public void addDailyStatistics(){
+
+        confirmWeight.setOnClickListener( new View.OnClickListener() {
+            boolean result = false;
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setCancelable( true );
+                if (inputActualWeight.getText().length() == 0) {
+                    builder.setTitle( "Uwaga" );
+                    builder.setMessage( "Najpierw wprowadź wagę" );
+                    builder.setPositiveButton( "Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    } );
+                    builder.show();
+                } else {
+                    result = myDb.insertDataToStatisticsTable ( setActualDate(),
+                            Integer.parseInt( substractCaloriesFromProduct.getText().toString()),
+                            Integer.parseInt( addCaloriesFromActivity.getText().toString()),
+                            Float.parseFloat( inputActualWeight.getText().toString()) );
+
+                    if(!result){
+                        result = myDb.updateDataToStatisticsTable ( setActualDate(),
+                                Integer.parseInt( substractCaloriesFromProduct.getText().toString()),
+                                Integer.parseInt( addCaloriesFromActivity.getText().toString()),
+                                Float.parseFloat( inputActualWeight.getText().toString()));
+                    }
+                    inputActualWeight.setText( "" );
+
+                    builder.setTitle( "Uwaga" );
+                    builder.setMessage( "Waga i statystyki zostały zaktualizowane" );
+                    builder.setPositiveButton( "Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    } );
+                    builder.show();
+                }
+            }
+        } );
     }
 }

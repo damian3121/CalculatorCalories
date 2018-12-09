@@ -52,7 +52,50 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.417"></android.support.constraint.ConstraintLayout>
+            app:layout_constraintVertical_bias="0.417">
+
+            <io.netopen.hotbitmapgg.library.view.RingProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="159dp"
+                android:layout_height="227dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:max="100"
+                app:ringColor="@color/colorPrimary"
+                app:ringProgressColor="@color/colorAccent"
+                app:ringWidth="3dp"
+                app:style="FILL"
+                app:textColor="@color/colorPrimaryDark"
+                app:textIsShow="true"
+                app:textSize="16sp"
+                tools:ignore="MissingConstraints">
+
+            </io.netopen.hotbitmapgg.library.view.RingProgressBar>
+
+            <io.netopen.hotbitmapgg.library.view.RingProgressBar
+                android:id="@+id/progress_bar2"
+                android:layout_width="162dp"
+                android:layout_height="200dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:max="100"
+                app:ringColor="@color/colorPrimary"
+                app:ringProgressColor="@color/colorAccent"
+                app:ringWidth="3dp"
+                app:style="STROKE"
+                app:textColor="@color/colorPrimaryDark"
+                app:textIsShow="true"
+                app:textSize="16sp"
+                tools:ignore="MissingConstraints">
+
+            </io.netopen.hotbitmapgg.library.view.RingProgressBar>
+
+        </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/fragment_container"
@@ -169,6 +212,64 @@
 
         </android.support.constraint.ConstraintLayout>
 
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/fragment_container_form_statistics"
+            android:layout_width="0dp"
+            android:layout_height="93dp"
+            android:background="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.754">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/inputActualWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:ems="10"
+                    android:hint="Aktualna waga [kg]"
+                    android:inputType="numberDecimal"
+                    android:paddingTop="10dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/confirmWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="40dp"
+                android:background="#68efad"
+                android:paddingLeft="25dp"
+                android:paddingTop="10dp"
+                android:paddingRight="25dp"
+                android:paddingBottom="10dp"
+                android:text="Aktualizuj"
+                android:textColor="#ffffff"
+                android:textColorLink="#ffffff"
+                android:textFontWeight="100"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerTypeOfMeal"
+                app:layout_constraintVertical_bias="0.881" />
+
+        </android.support.constraint.ConstraintLayout>
+
 
     </android.support.constraint.ConstraintLayout>
 
@@ -182,6 +283,5 @@
         android:layout_gravity="start">
 
     </android.support.design.widget.NavigationView>
-
 
 </android.support.v4.widget.DrawerLayout>

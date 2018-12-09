@@ -29,4 +29,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'com.weiwangcn.betterspinner:library-material:1.1.0'
     compile 'com.github.ganfra:material-spinner:1.1.1'
+    compile 'com.github.HotBitmapGG:RingProgressBar:V1.2.2'
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url 'https://jitpack.io'}
+    }
 }
