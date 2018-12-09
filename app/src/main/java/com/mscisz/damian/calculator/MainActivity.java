@@ -170,6 +170,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intentAddActivity = new Intent(getApplicationContext(), ActivityAddSports.class);
                 startActivity(intentAddActivity);
                 break;
+            case R.id.progress:
+                Intent intentAddStatisticsProgress = new Intent(getApplicationContext(), ActivityProgress.class);
+                startActivity(intentAddStatisticsProgress);
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);

@@ -18,10 +18,13 @@
         </activity>
         <activity android:name=".EnterBasicDataActivity" />
         <activity android:name=".ActivityAddProduct" />
-        <activity android:name=".ActivityShowMealByDate" android:noHistory="true"/>
+        <activity
+            android:name=".ActivityShowMealByDate"
+            android:noHistory="true" />
         <activity android:name=".ActivityAddMeal" />
         <activity android:name=".ActivityAddSports" />
-        <activity android:name=".ActivityPracticedSports"></activity>
+        <activity android:name=".ActivityPracticedSports" />
+        <activity android:name=".ActivityProgress"></activity>
     </application>
 
 </manifest>
