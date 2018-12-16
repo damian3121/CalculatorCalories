@@ -340,9 +340,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setNotification() {
         Calendar calendar = Calendar.getInstance();
 
-        calendar.set( Calendar.HOUR_OF_DAY, 19);
-        calendar.set( Calendar.MINUTE, 59 );
-        calendar.set( Calendar.SECOND, 30 );
+        calendar.set( Calendar.HOUR_OF_DAY, 1);
+        calendar.set( Calendar.MINUTE, 9 );
+        calendar.set( Calendar.SECOND, 59 );
 
         Intent intent = new Intent( getApplicationContext(), Notification_receiver.class );
 
